@@ -1,27 +1,54 @@
-# DesafioImobiliaria
+# Imobiliária
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
+Este é um projeto Angular para um sistema de CRUD de imóveis disponíveis para aluguel e venda. A aplicação permite listar, adicionar, editar e excluir imóveis, e também preencher automaticamente os campos de endereço com base no CEP utilizando a API ViaCep.
 
-## Development server
+## Funcionalidades
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Listagem de imóveis
+- Adição de novos imóveis
+- Edição de imóveis existentes
+- Exclusão de imóveis
+- Preenchimento automático de endereço baseado no CEP
 
-## Code scaffolding
+## Tecnologias Utilizadas
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Angular
+- Bootstrap
+- API ViaCep
+- RxJS
 
-## Build
+## Pré-requisitos
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Node.js
+- Angular CLI
 
-## Running unit tests
+## Instalação
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+1. Clone o repositório:
+   
+```bash
+git clone https://github.com/seu-usuario/real-estate-crud.git
+```
+2. Navegue até o diretório do projeto:
+   
+```bash
+git cd real-estate-crud
+```
 
-## Running end-to-end tests
+3. Instale as dependências:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+npm install
+```
+```bash
+npm install bootstrap@5.3.3
+```
 
-## Further help
+## Executando a Aplicação
+Inicie o servidor de desenvolvimento:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+ng serve
+```
+Abra o navegador e vá para http://localhost:4200.
+Ou acesse [**aqui**](https://desafio-imobiliaria.vercel.app/imoveis)
