@@ -1,0 +1,32 @@
+<div class="container" *ngIf="imovel">
+  <h2 class="text-center mt-5">{{ imovel.nome }}</h2>
+  <div class="d-flex justify-content-evenly mt-4">
+    <div class="flex-column">
+      <p><strong>Tipo: </strong>{{ imovel.tipo }}</p>
+      <p><strong>Valor: </strong>{{ imovel.valor | currency }}</p>
+      <p><strong>Condomínio: </strong>{{ imovel.condominio | currency }}</p>
+      <p><strong>Quartos: </strong>{{ imovel.quartos }}</p>
+      <p><strong>Banheiros: </strong>{{ imovel.banheiros }}</p>
+      <p><strong>Mobiliado: </strong>{{ imovel.mobiliado ? 'Sim' : 'Não' }}</p>
+      <p><strong>Área: </strong>{{ imovel.area }} m²</p>
+      <p><strong>Venda: </strong>{{ imovel.venda ? 'Sim' : 'Não' }}</p>
+      <p><strong>Aluguel: </strong>{{ imovel.aluguel ? 'Sim' : 'Não' }}</p>
+      <p><strong>Data do Anúncio: </strong>{{ imovel.dataAnuncio | date }}</p>
+    </div>
+    <div class="flex-column">
+      <h3>Endereço</h3>
+      <p><strong>CEP: </strong>{{ imovel.endereco.cep }}</p>
+      <p><strong>Rua: </strong>{{ imovel.endereco.rua }}</p>
+      <p><strong>Complemento: </strong>{{ imovel.endereco.complemento }}</p>
+      <p><strong>Número: </strong>{{ imovel.endereco.numero }}</p>
+      <p><strong>Bairro: </strong>{{ imovel.endereco.bairro }}</p>
+      <p><strong>Cidade: </strong>{{ imovel.endereco.cidade }}</p>
+      <p><strong>UF: </strong>{{ imovel.endereco.uf }}</p>
+      <div class="mt-4">
+        <h3>Proprietário</h3>
+        <p><strong>Nome: </strong>{{ imovel.proprietario.nome }}</p>
+      </div>
+    </div>
+  </div>
+  <a routerLink="/imoveis" class="btn btn-secondary">Voltar</a>
+</div>

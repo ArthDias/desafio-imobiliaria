@@ -1,0 +1,94 @@
+<div class="container mt-5">
+  <h2 *ngIf="imovel.id">Editar imóvel</h2>
+  <h2 *ngIf="!imovel.id">Adicionar um novo imóvel</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" [(ngModel)]="imovel.nome" name="nome" required>
+      </div>
+      <div class="mb-3">
+        <label for="tipo" class="form-label">Tipo</label>
+        <input type="text" class="form-control" id="tipo" [(ngModel)]="imovel.tipo" name="tipo" required>
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="valor" class="form-label">Valor</label>
+        <input type="number" class="form-control" id="valor" [(ngModel)]="imovel.valor" name="valor" required>
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="condominio" class="form-label">Condomínio</label>
+        <input type="number" class="form-control" id="condominio" [(ngModel)]="imovel.condominio" name="condominio">
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="quartos" class="form-label">Quartos</label>
+        <input type="number" class="form-control" id="quartos" [(ngModel)]="imovel.quartos" name="quartos" required>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="banheiros" class="form-label">Banheiros</label>
+        <input type="number" class="form-control" id="banheiros" [(ngModel)]="imovel.banheiros" name="banheiros"
+          required>
+      </div>
+      <div class="mb-3  col-md-4">
+        <label for="area" class="form-label">Área (m²)</label>
+        <input type="number" class="form-control" id="area" [(ngModel)]="imovel.area" name="area" required>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="mobiliado" class="form-label me-3">Mobiliado</label>
+        <input type="checkbox" id="mobiliado" [(ngModel)]="imovel.mobiliado" name="mobiliado">
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="venda" class="form-label me-3">Venda</label>
+        <input type="checkbox" id="venda" [disabled]="imovel.aluguel" [(ngModel)]="imovel.venda" name="venda">
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="aluguel" class="form-label me-3">Aluguel</label>
+        <input type="checkbox" [disabled]="imovel.venda" id="aluguel" [(ngModel)]="imovel.aluguel" name="aluguel">
+      </div>
+      <div class="mb-3">
+        <label for="dataAnuncio" class="form-label">Data do Anúncio</label>
+        <input type="date" class="form-control" id="dataAnuncio" [(ngModel)]="imovel.dataAnuncio" name="dataAnuncio"
+          required>
+      </div>
+    </div>
+    <h3 class="mt-4">Endereço</h3>
+    <div class="row">
+      <div class="mb-3 col-md-3">
+        <label for="cep" class="form-label">CEP</label>
+        <input type="text" class="form-control" id="cep" [(ngModel)]="imovel.endereco.cep" name="cep" required (ngModelChange)="onCepChange($event)">
+      </div>
+      <div class="mb-3 col-md-3">
+        <label for="numero" class="form-label">Número</label>
+        <input type="text" class="form-control" id="numero" [(ngModel)]="imovel.endereco.numero" name="numero" required>
+      </div>
+      <div class="mb-3 col-md-6">
+        <label for="complemento" class="form-label">Complemento</label>
+        <input type="text" class="form-control" id="complemento" [(ngModel)]="imovel.endereco.complemento"
+          name="complemento" required>
+      </div>
+      <div class="mb-3 col-md-12">
+        <label for="rua" class="form-label">Rua</label>
+        <input type="text" class="form-control" id="rua" [(ngModel)]="imovel.endereco.rua" name="rua" required>
+      </div>
+      <div class="mb-3 col-md-5">
+        <label for="bairro" class="form-label">Bairro</label>
+        <input type="text" class="form-control" id="bairro" [(ngModel)]="imovel.endereco.bairro" name="bairro" required>
+      </div>
+      <div class="mb-3 col-md-4">
+        <label for="cidade" class="form-label">Cidade</label>
+        <input type="text" class="form-control" id="cidade" [(ngModel)]="imovel.endereco.cidade" name="cidade" required>
+      </div>
+      <div class="mb-3 col-md-3">
+        <label for="uf" class="form-label">Estado</label>
+        <input type="text" class="form-control" id="uf" [(ngModel)]="imovel.endereco.uf" name="uf" required>
+      </div>
+      <h3 class="mt-4">Proprietário</h3>
+      <div class="mb-3">
+        <label for="proprietarioNome" class="form-label">Nome do Proprietário</label>
+        <input type="text" class="form-control" id="proprietarioNome" [(ngModel)]="imovel.proprietario.nome"
+          name="proprietarioNome" required>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-4 me-3 mb-5">Salvar</button>
+    <a routerLink="/imoveis" class="btn btn-secondary mt-4 mb-5">Cancelar</a>
+  </form>
+</div>
