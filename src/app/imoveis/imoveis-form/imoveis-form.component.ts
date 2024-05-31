@@ -36,7 +36,8 @@ export class ImoveisFormComponent implements OnInit {
       id: 0,
       nome: '',
       imovelId: 0
-    }
+    },
+    imageUrl: 'string'
   };
 
   constructor(
@@ -84,16 +85,31 @@ export class ImoveisFormComponent implements OnInit {
     }
   }
 
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imovel.imageUrl = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
   onSubmit(): void {
     if (this.imovel.id) {
-      this.imovelService.updateImovel(this.imovel);
+      this.imovelService.updateImovel(this.imovel).subscribe(() => {
+        this.router.navigate(['/imoveis']);
+      });
     } else {
       this.imovel.id = new Date().getTime(); // Gerando ID simulado
       this.imovel.endereco.id = new Date().getTime(); // Gerando ID endereco simulado
       this.imovel.proprietario.id = new Date().getTime(); // Gerando ID Proprietario simulado, apenas se for definido
       this.imovel.proprietario.imovelId = this.imovel.id;
 
-      this.imovelService.addImovel(this.imovel);
+      this.imovelService.addImovel(this.imovel).subscribe(() => {
+        this.router.navigate(['/imoveis']);
+      });
     }
     this.router.navigate(['/imoveis']);
   }

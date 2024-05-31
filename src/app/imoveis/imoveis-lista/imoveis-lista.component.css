@@ -1,3 +1,25 @@
-div a, button {
+div a,
+button {
     width: 100px;
+}
+
+.detalhes {
+    color: #dae2de;
+    background-color: #15a465;
+}
+
+.editar {
+    color: #dae2de;
+    background-color: #3e81e4;
+}
+
+.excluir {
+    color: #dae2de;
+    background-color: #d65667;
+}
+
+.card-img {
+    width: 500px; /*Define a largura da imagem para 100% da coluna*/
+    height: 200px; /*Define a altura fixa da imagem*/
+    object-fit: cover; /*Faz a imagem se ajustar ao tamanho definido sem distorcer*/
 }

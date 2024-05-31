@@ -16,7 +16,8 @@ export class ImoveisListaComponent implements OnInit {
   }
 
   deleteImovel(id: number): void {
-    this.imovelService.deleteImovel(id);
-    this.imoveis = this.imoveis.filter(imovel => imovel.id !== id);
+    this.imovelService.deleteImovel(id).subscribe(() => {
+      this.imoveis = this.imoveis.filter(imovel => imovel.id !== id);
+    });
   }
 }

@@ -1,19 +1,26 @@
 <div class="container">
-  <ul class="list-group list-group-numbered mt-5 ">
-    <li style="background-color: #f0f0f0;" class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let imovel of imoveis">
-      <div class="ms-2 me-auto">
-        <h5 class="fw-bold">{{ imovel.nome }}</h5>
-        <p><strong>Tipo: </strong>{{ imovel.tipo }}</p>
-        <p *ngIf="imovel.aluguel"><strong>Modalidade: </strong>Aluguel</p>
-        <p *ngIf="imovel.venda"><strong>Modalidade: </strong>Venda</p>
-        <p><strong>Endereço: </strong>{{ imovel.endereco.rua }}, {{ imovel.endereco.numero }}, {{ imovel.endereco.bairro
-          }}, {{ imovel.endereco.cidade }}, {{ imovel.endereco.uf }}</p>
-        <p><strong>Proprietário: </strong>{{ imovel.proprietario.nome }}</p>
-      </div>
-      <div class="mt-auto mb-auto me-5 d-flex flex-column align-items-start">
-        <a [routerLink]="['/imoveis', imovel.id]" class="btn btn-info btn-sm me-2 mb-2">Detalhes</a>
-        <a [routerLink]="['/imoveis', imovel.id, 'editar']" class="btn btn-warning btn-sm me-2 mb-2">Editar</a>
-        <button (click)="deleteImovel(imovel.id)" class="btn btn-danger btn-sm">Excluir</button>
+  <ul class="list-group mt-5">
+    <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let imovel of imoveis">
+      <div class="ms-2 me-auto row">
+        <div class="col-12 col-md-4">
+          <img *ngIf="imovel?.imageUrl" [src]="imovel.imageUrl" alt="{{ imovel.nome }}" width="1000" class="img-thumbnail card-img">
+        </div>
+        <div class="col-12 col-md-8">
+          <h4 *ngIf="imovel?.aluguel"><strong>Aluguel</strong></h4>
+          <h4 *ngIf="imovel?.venda"><strong>Venda</strong></h4>
+          <h5 class="fw-bold">{{ imovel?.valor | currency:'BRL' }}</h5>
+          <p *ngIf="imovel?.aluguel">{{ imovel?.condominio | currency:'BRL' }} Condominio</p>
+          <p><strong>Tipo: </strong>{{ imovel.tipo }}</p>
+          <p><strong>Endereço: </strong>{{ imovel?.endereco?.rua }}, {{ imovel?.endereco?.numero }}, {{
+            imovel?.endereco?.bairro
+            }}, {{ imovel?.endereco?.cidade }}, {{ imovel?.endereco?.uf }}</p>
+          <p><strong>Proprietário: </strong>{{ imovel?.proprietario?.nome }}</p>
+        </div>
+        <div class="mt-auto mb-auto me-5 d-flex justify-content-center align-items-start">
+          <a [routerLink]="['/imoveis', imovel?.id]" class="btn btn-sm me-2 mb-2 detalhes">Detalhes</a>
+          <a [routerLink]="['/imoveis', imovel?.id, 'editar']" class="btn btn-sm me-2 mb-2 editar">Editar</a>
+          <button (click)="deleteImovel(imovel.id)" class="btn btn-sm excluir">Excluir</button>
+        </div>
       </div>
     </li>
   </ul>

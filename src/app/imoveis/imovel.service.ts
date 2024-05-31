@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 export interface Endereco {
   id: number;
@@ -33,6 +34,7 @@ export interface Imovel {
   dataAnuncio: Date;
   endereco: Endereco;
   proprietario: Proprietario;
+  imageUrl: string;
 }
 
 @Injectable({
@@ -40,87 +42,27 @@ export interface Imovel {
 })
 export class ImovelService {
 
-  private imoveis: Imovel[] = [
-    {
-      id: 1,
-      nome: 'Apartamento Central',
-      tipo: 'Apartamento',
-      valor: 1200,
-      condominio: 300,
-      quartos: 2,
-      banheiros: 1,
-      mobiliado: false,
-      area: 60,
-      venda: false,
-      aluguel: true,
-      dataAnuncio: new Date('2024-01-01'),
-      endereco: {
-        id: 1,
-        rua: 'Rua R',
-        numero: '123',
-        bairro: 'COHAB',
-        cidade: 'Tucuruí',
-        uf: 'PA',
-        cep: 68459595,
-        complemento: ''
-      },
-      proprietario: {
-        id: 1,
-        nome: 'João Silva',
-        imovelId: 1
-      }
-    },
-    {
-      id: 2,
-      nome: 'Casa com Piscina',
-      tipo: 'Casa',
-      valor: 1000000,
-      condominio: 0,
-      quartos: 4,
-      banheiros: 3,
-      mobiliado: true,
-      area: 800,
-      venda: true,
-      aluguel: false,
-      dataAnuncio: new Date('2024-02-15'),
-      endereco: {
-        id: 2,
-        rua: 'Rua Maracanã',
-        numero: '456',
-        bairro: 'Centro Norte',
-        cidade: 'Várzea Grande',
-        uf: 'MT',
-        cep: 78110560,
-        complemento: ''
-      },
-      proprietario: {
-        id: 2,
-        nome: 'Maria Souza',
-        imovelId: 2
-      }
-    }
-  ];
+  private apiUrl = 'http://localhost:5875';
 
+  constructor(private http: HttpClient) { }
+  
   getImoveis(): Observable<Imovel[]> {
-    return of(this.imoveis);
+    return this.http.get<Imovel[]>(`${this.apiUrl}/imovel/`);
   }
 
   getImovel(id: number): Observable<Imovel | undefined> {
-    return of(this.imoveis.find(imovel => imovel.id === id));
+    return this.http.get<Imovel>(`${this.apiUrl}/imovel/${id}`);
   }
 
-  addImovel(imovel: Imovel): void {
-    this.imoveis.push(imovel);
+  addImovel(imovel: Imovel): Observable<Imovel> {
+    return this.http.post<Imovel>(`${this.apiUrl}/imovel`, imovel);
   }
 
-  updateImovel(imovel: Imovel): void {
-    const index = this.imoveis.findIndex(p => p.id === imovel.id);
-    if (index !== -1) {
-      this.imoveis[index] = imovel;
-    }
+  updateImovel(imovel: Imovel): Observable<Imovel> {
+    return this.http.put<Imovel>(`${this.apiUrl}/imovel/${imovel.id}`, imovel);
   }
 
-  deleteImovel(id: number): void {
-    this.imoveis = this.imoveis.filter(imovel => imovel.id !== id);
+  deleteImovel(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/imovel/${id}`);
   }
 }
