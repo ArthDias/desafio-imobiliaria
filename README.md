@@ -32,7 +32,7 @@ git clone https://github.com/seu-usuario/real-estate-crud.git
 2. Navegue até o diretório do projeto:
    
 ```bash
-git cd real-estate-crud
+git cd desafio-imobiliaria
 ```
 
 3. Instale as dependências:
@@ -42,10 +42,27 @@ npm install
 ```
 ```bash
 npm install bootstrap@5.3.3
+ng add @ng-bootstrap/ng-bootstrap
+```
+4. Navegue até o diretório da API:
+   
+```bash
+git cd api-fake
+```
+5. Instale as dependências:
+   
+```bash
+npm install
 ```
 
 ## Executando a Aplicação
-Inicie o servidor de desenvolvimento:
+Inicie o servidor da api:
+
+```bash
+npm start
+```
+
+Inicie o servidor de desenvolvimento (lembre-se de estar no diretório desafio-imobiliaria):
 
 ```bash
 ng serve
