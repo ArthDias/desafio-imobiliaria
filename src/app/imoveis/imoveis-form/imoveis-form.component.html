@@ -1,99 +1,139 @@
 <div class="container mt-5">
-  <h2 *ngIf="imovel.id">Editar imóvel</h2>
-  <h2 *ngIf="!imovel.id">Adicionar um novo imóvel</h2>
-  <form (ngSubmit)="onSubmit()">
+  <h2>Adicionar um novo imóvel</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" #f="ngForm">
+    {{imovel}}
     <div class="row">
       <div class="mb-3">
         <label for="nome" class="form-label">Nome</label>
-        <input type="text" class="form-control" id="nome" [(ngModel)]="imovel.nome" name="nome" required>
+        <input type="text" class="form-control" id="nome" name="nome" formControlName="nome">
+        <div *ngIf="this.form.get('nome')?.invalid && (form.get('nome')?.dirty || form.get('nome')?.touched)" class="text-danger">
+          Nome é um campo obrigatório.
+        </div>
       </div>
       <div class="mb-3">
         <label for="tipo" class="form-label">Tipo</label>
-        <input type="text" class="form-control" id="tipo" [(ngModel)]="imovel.tipo" name="tipo" required>
+        <input type="text" class="form-control" id="tipo" name="tipo" formControlName="tipo">
+        <div *ngIf="this.form.get('tipo')?.invalid && (form.get('tipo')?.dirty || form.get('tipo')?.touched)" class="text-danger">
+          Tipo é um campo obrigatório.
+        </div>
       </div>
       <div class="mb-3 col-md-6">
         <label for="valor" class="form-label">Valor</label>
-        <input type="number" class="form-control" id="valor" [(ngModel)]="imovel.valor" name="valor" required>
+        <input type="number" class="form-control" id="valor" name="valor" formControlName="valor">
+        <div *ngIf="this.form.get('valor')?.invalid && (form.get('valor')?.dirty || form.get('valor')?.touched)" class="text-danger">
+          Valor é um campo obrigatório.
+        </div>
       </div>
       <div class="mb-3 col-md-6">
         <label for="condominio" class="form-label">Condomínio</label>
-        <input type="number" class="form-control" id="condominio" [(ngModel)]="imovel.condominio" name="condominio">
+        <input type="number" class="form-control" id="condominio" name="condominio" formControlName="condominio">
       </div>
       <div class="mb-3 col-md-4">
         <label for="quartos" class="form-label">Quartos</label>
-        <input type="number" class="form-control" id="quartos" [(ngModel)]="imovel.quartos" name="quartos" required>
+        <input type="number" class="form-control" id="quartos" name="quartos" formControlName="quartos">
+        <div *ngIf="this.form.get('quartos')?.invalid && (form.get('quartos')?.dirty || form.get('quartos')?.touched)" class="text-danger">
+          Quartos é um campo obrigatório.
+        </div>
       </div>
       <div class="mb-3 col-md-4">
         <label for="banheiros" class="form-label">Banheiros</label>
-        <input type="number" class="form-control" id="banheiros" [(ngModel)]="imovel.banheiros" name="banheiros"
-          required>
+        <input type="number" class="form-control" id="banheiros" name="banheiros" formControlName="banheiros">
+        <div *ngIf="this.form.get('banheiros')?.invalid && (form.get('banheiros')?.dirty || form.get('banheiros')?.touched)" class="text-danger">
+          Banheiros é um campo obrigatório.
+        </div>
       </div>
       <div class="mb-3  col-md-4">
         <label for="area" class="form-label">Área (m²)</label>
-        <input type="number" class="form-control" id="area" [(ngModel)]="imovel.area" name="area" required>
+        <input type="number" class="form-control" id="area" name="area" formControlName="area">
+        <div *ngIf="this.form.get('area')?.invalid && (form.get('area')?.dirty || form.get('area')?.touched)" class="text-danger">
+          Área é um campo obrigatório.
+        </div>
       </div>
       <div class="mb-3 col-md-4">
         <label for="mobiliado" class="form-label me-3">Mobiliado</label>
-        <input type="checkbox" id="mobiliado" [(ngModel)]="imovel.mobiliado" name="mobiliado">
+        <input type="checkbox" id="mobiliado" name="mobiliado" formControlName="mobiliado">
       </div>
       <div class="mb-3 col-md-4">
         <label for="venda" class="form-label me-3">Venda</label>
-        <input type="checkbox" id="venda" [disabled]="imovel.aluguel" [(ngModel)]="imovel.venda" name="venda">
+        <input type="checkbox" id="venda" [disabled]="this.form.get('aluguel')?.value == true" name="venda" formControlName="venda">
       </div>
       <div class="mb-3 col-md-4">
         <label for="aluguel" class="form-label me-3">Aluguel</label>
-        <input type="checkbox" [disabled]="imovel.venda" id="aluguel" [(ngModel)]="imovel.aluguel" name="aluguel">
+        <input type="checkbox" [disabled]="this.form.get('venda')?.value == true" id="aluguel" name="aluguel" formControlName="aluguel">
       </div>
       <div class="mb-3">
         <label for="dataAnuncio" class="form-label">Data do Anúncio</label>
-        <input type="date" class="form-control" id="dataAnuncio" [(ngModel)]="imovel.dataAnuncio" name="dataAnuncio"
-          required>
+        <input type="date" class="form-control" id="dataAnuncio" name="dataAnuncio" formControlName="dataAnuncio">
+        <div *ngIf="this.form.get('dataAnuncio')?.invalid && (form.get('dataAnuncio')?.dirty || form.get('dataAnuncio')?.touched)" class="text-danger">
+          Data do Anúncio é um campo obrigatório.
+        </div>
       </div>
     </div>
     <h3 class="mt-4">Endereço</h3>
     <div class="row">
       <div class="mb-3 col-md-3">
         <label for="cep" class="form-label">CEP</label>
-        <input type="text" class="form-control" id="cep" [(ngModel)]="imovel.endereco.cep" name="cep" required (ngModelChange)="onCepChange($event)">
+        <input type="text" class="form-control" id="cep" name="cep" formControlName="cep"
+          (ngModelChange)="onCepChange($event)">
+          <div *ngIf="this.form.get('cep')?.invalid && (form.get('cep')?.dirty || form.get('cep')?.touched)" class="text-danger">
+            CEP é um campo obrigatório.
+          </div>
       </div>
       <div class="mb-3 col-md-3">
         <label for="numero" class="form-label">Número</label>
-        <input type="text" class="form-control" id="numero" [(ngModel)]="imovel.endereco.numero" name="numero" required>
+        <input type="text" class="form-control" id="numero" name="numero" formControlName="numero">
+        <div *ngIf="this.form.get('numero')?.invalid && (form.get('numero')?.dirty || form.get('numero')?.touched)" class="text-danger">
+          Número é um campo obrigatório.
+        </div>
       </div>
       <div class="mb-3 col-md-6">
         <label for="complemento" class="form-label">Complemento</label>
-        <input type="text" class="form-control" id="complemento" [(ngModel)]="imovel.endereco.complemento"
-          name="complemento" required>
+        <input type="text" class="form-control" id="complemento" name="complemento">
       </div>
       <div class="mb-3 col-md-12">
         <label for="rua" class="form-label">Rua</label>
-        <input type="text" class="form-control" id="rua" [(ngModel)]="imovel.endereco.rua" name="rua" required>
+        <input type="text" class="form-control" id="rua" name="rua" formControlName="rua">
+        <div *ngIf="this.form.get('rua')?.invalid && (form.get('rua')?.dirty || form.get('rua')?.touched)" class="text-danger">
+          Rua é um campo obrigatório.
+        </div>
       </div>
       <div class="mb-3 col-md-5">
         <label for="bairro" class="form-label">Bairro</label>
-        <input type="text" class="form-control" id="bairro" [(ngModel)]="imovel.endereco.bairro" name="bairro" required>
+        <input type="text" class="form-control" id="bairro" name="bairro" formControlName="bairro">
+        <div *ngIf="this.form.get('bairro')?.invalid && (form.get('bairro')?.dirty || form.get('bairro')?.touched)" class="text-danger">
+          Bairro é um campo obrigatório.
+        </div>
       </div>
       <div class="mb-3 col-md-4">
         <label for="cidade" class="form-label">Cidade</label>
-        <input type="text" class="form-control" id="cidade" [(ngModel)]="imovel.endereco.cidade" name="cidade" required>
+        <input type="text" class="form-control" id="cidade" name="cidade" formControlName="cidade">
+        <div *ngIf="this.form.get('cidade')?.invalid && (form.get('cidade')?.dirty || form.get('cidade')?.touched)" class="text-danger">
+          Cidade é um campo obrigatório.
+        </div>
       </div>
       <div class="mb-3 col-md-3">
         <label for="uf" class="form-label">Estado</label>
-        <input type="text" class="form-control" id="uf" [(ngModel)]="imovel.endereco.uf" name="uf" required>
+        <input type="text" class="form-control" id="uf" name="uf" formControlName="uf">
+        <div *ngIf="this.form.get('uf')?.invalid && (form.get('uf')?.dirty || form.get('uf')?.touched)" class="text-danger">
+          Estado é um campo obrigatório.
+        </div>
       </div>
       <h3 class="mt-4">Proprietário</h3>
       <div class="mb-3">
         <label for="proprietarioNome" class="form-label">Nome do Proprietário</label>
-        <input type="text" class="form-control" id="proprietarioNome" [(ngModel)]="imovel.proprietario.nome"
-          name="proprietarioNome" required>
+        <input type="text" class="form-control" id="proprietarioNome" name="proprietarioNome"
+          formControlName="proprietarioNome">
+          <div *ngIf="this.form.get('proprietarioNome')?.invalid && (form.get('proprietarioNome')?.dirty || form.get('proprietarioNome')?.touched)" class="text-danger">
+            Nome do Proprietário é um campo obrigatório.
+          </div>
       </div>
 
       <div class="mb-3">
         <label for="image" class="form-label">Imagem</label>
-        <input type="file" class="form-control" id="image" (change)="onFileChange($event)">
+        <input type="file" class="form-control" id="image" (change)="onFileChange($event)" formControlName="imageUrl">
       </div>
     </div>
-    <button type="submit" class="btn btn-primary mt-4 me-3 mb-5">Salvar</button>
+    <button type="submit" class="btn btn-primary mt-4 me-3 mb-5" (click)="onSubmit()">Salvar</button>
     <a routerLink="/imoveis" class="btn btn-secondary mt-4 mb-5">Cancelar</a>
   </form>
 </div>

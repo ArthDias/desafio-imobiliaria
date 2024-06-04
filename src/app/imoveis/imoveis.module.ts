@@ -4,28 +4,31 @@ import { RouterModule, Routes } from '@angular/router';
 import { ImoveisListaComponent } from './imoveis-lista/imoveis-lista.component';
 import { ImoveisFormComponent } from './imoveis-form/imoveis-form.component';
 import { ImoveisDetalhesComponent } from './imoveis-detalhes/imoveis-detalhes.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ImovelService } from './imovel.service';
+import { ImovelService } from '../services/imovel.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ImoveisEditarComponent } from './imoveis-editar/imoveis-editar.component';
 
 
 const routes: Routes = [
   { path: '', component: ImoveisListaComponent },
   { path: 'novo', component: ImoveisFormComponent },
   { path: ':id', component: ImoveisDetalhesComponent },
-  { path: ':id/editar', component: ImoveisFormComponent }
+  { path: ':id/editar', component: ImoveisEditarComponent }
 ];
 
 @NgModule({
   declarations: [
     ImoveisListaComponent,
     ImoveisDetalhesComponent,
-    ImoveisFormComponent
+    ImoveisFormComponent,
+    ImoveisEditarComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forChild(routes),
     NgbModule,
     HttpClientModule

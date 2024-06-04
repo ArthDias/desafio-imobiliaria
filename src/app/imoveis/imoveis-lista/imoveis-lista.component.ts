@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Imovel, ImovelService } from '../imovel.service';
+import { ImovelService } from '../../services/imovel.service';
+import { Imovel } from '../models/imovel';
 
 @Component({
   selector: 'app-imoveis-lista',
@@ -8,10 +9,12 @@ import { Imovel, ImovelService } from '../imovel.service';
 })
 export class ImoveisListaComponent implements OnInit {
   imoveis: Imovel[] = [];
+  isLoggedIn: boolean = false;
 
   constructor(private imovelService: ImovelService) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = !!localStorage.getItem('token');
     this.imovelService.getImoveis().subscribe(imoveis => this.imoveis = imoveis);
   }
 

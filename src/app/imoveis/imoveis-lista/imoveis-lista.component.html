@@ -18,8 +18,8 @@
         </div>
         <div class="mt-auto mb-auto me-5 d-flex justify-content-center align-items-start">
           <a [routerLink]="['/imoveis', imovel?.id]" class="btn btn-sm me-2 mb-2 detalhes">Detalhes</a>
-          <a [routerLink]="['/imoveis', imovel?.id, 'editar']" class="btn btn-sm me-2 mb-2 editar">Editar</a>
-          <button (click)="deleteImovel(imovel.id)" class="btn btn-sm excluir">Excluir</button>
+          <a [routerLink]="['/imoveis', imovel?.id, 'editar']" class="btn btn-sm me-2 mb-2 editar" *ngIf="isLoggedIn">Editar</a>
+          <button (click)="deleteImovel(imovel.id)" class="btn btn-sm excluir" *ngIf="isLoggedIn">Excluir</button>
         </div>
       </div>
     </li>
