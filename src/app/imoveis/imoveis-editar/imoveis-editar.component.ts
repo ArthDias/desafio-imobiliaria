@@ -80,7 +80,7 @@ export class ImoveisEditarComponent implements OnInit {
       bairro: imovel.endereco.bairro,
       cidade: imovel.endereco.cidade,
       uf: imovel.endereco.uf,
-      proprietarioNome: imovel.proprietario.nome
+      proprietarioNome: imovel.proprietario.proprietarioNome
     })
   }
 

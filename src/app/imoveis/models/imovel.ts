@@ -11,7 +11,7 @@ export interface Endereco {
 
 export interface Proprietario {
   id: number;
-  nome: string;
+  proprietarioNome: string;
   imovelId: number;
 }
 

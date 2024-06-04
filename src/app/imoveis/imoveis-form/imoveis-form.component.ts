@@ -11,7 +11,38 @@ import { Imovel } from '../models/imovel';
   styleUrl: './imoveis-form.component.css'
 })
 export class ImoveisFormComponent implements OnInit {
-  public imovel!: Imovel;
+  public imovel: Imovel = {
+    id: 0,
+    nome: '',
+    tipo: '',
+    valor: 0,
+    condominio: 0,
+    quartos: 0,
+    banheiros: 0,
+    mobiliado: false,
+    area: 0,
+    venda: false,
+    aluguel: false,
+    dataAnuncio: new Date(),
+    endereco: {
+      id: 0,
+      rua: '',
+      numero: '',
+      bairro: '',
+      cidade: '',
+      uf: '',
+      cep: 0,
+      complemento: ''
+    },
+    enderecoId: '',
+    proprietario: {
+      id: 0,
+      proprietarioNome: '',
+      imovelId: 0
+    },
+    proprietarioId: '',
+    imageUrl: ''
+  };
   public form!: FormGroup;
   public url: any
 
@@ -36,22 +67,31 @@ export class ImoveisFormComponent implements OnInit {
       aluguel: [false],
       dataAnuncio: [new Date(), Validators.required],
       imageUrl: [],
-      cep: ['', Validators.required],
-      numero: [0, Validators.required],
-      complemento: [''],
-      rua: ['', Validators.required],
-      bairro: ['', Validators.required],
-      cidade: ['', Validators.required],
-      uf: ['', Validators.required],
-      proprietarioNome: ['', Validators.required],
+      endereco: this.fb.group({
+        cep: ['', Validators.required],
+        numero: ['', Validators.required],
+        complemento: [''],
+        rua: ['', Validators.required],
+        bairro: ['', Validators.required],
+        cidade: ['', Validators.required],
+        uf: ['', Validators.required]
+      }),
+      proprietario: this.fb.group({
+        proprietarioNome: ['', Validators.required]
+      }),
     });
   }
 
   resetaEnderecoForm() {
-    this.imovel.endereco.rua = '';
-    this.imovel.endereco.bairro = '';
-    this.imovel.endereco.cidade = '';
-    this.imovel.endereco.uf = '';
+    this.form.patchValue({
+      cep: '',
+      numero: 0,
+      complemento: '',
+      rua: '',
+      bairro: '',
+      cidade: '',
+      uf: ''
+    });
   }
 
   onCepChange(cep: string): void {
@@ -60,14 +100,18 @@ export class ImoveisFormComponent implements OnInit {
       //Expressão regular para validar o CEP.
       var validaCep = /^[0-9]{8}$/;
 
-      this.resetaEnderecoForm();
+      // this.resetaEnderecoForm();
       if (validaCep.test(cep)) {
         this.viaCepService.getEnderecoPeloCep(cep).subscribe({
           next: (dadosCep) => {
-            this.imovel.endereco.rua = dadosCep.logradouro;
-            this.imovel.endereco.bairro = dadosCep.bairro;
-            this.imovel.endereco.cidade = dadosCep.localidade;
-            this.imovel.endereco.uf = dadosCep.uf;
+            this.form.patchValue({
+              endereco: {
+                rua: dadosCep.logradouro,
+                bairro: dadosCep.bairro,
+                cidade: dadosCep.localidade,
+                uf: dadosCep.uf
+              }
+            });
           }
         });
       }
@@ -78,15 +122,14 @@ export class ImoveisFormComponent implements OnInit {
     const file = event.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => {
-        this.imovel.imageUrl = reader.result as string;
-      };
       reader.readAsDataURL(file);
+      reader.onload = (event:any) => {
+        this.form.patchValue({
+          imageUrl: event.target.result as string
+        });
+      };
+      console.log(this.form.value.imageUrl);
     }
-
-    this.form = new FormGroup({
-
-    })
   }
 
   onSubmit(): void {

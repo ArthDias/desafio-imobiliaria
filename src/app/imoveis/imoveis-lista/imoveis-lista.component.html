@@ -14,7 +14,7 @@
           <p><strong>Endereço: </strong>{{ imovel?.endereco?.rua }}, {{ imovel?.endereco?.numero }}, {{
             imovel?.endereco?.bairro
             }}, {{ imovel?.endereco?.cidade }}, {{ imovel?.endereco?.uf }}</p>
-          <p><strong>Proprietário: </strong>{{ imovel?.proprietario?.nome }}</p>
+          <p><strong>Proprietário: </strong>{{ imovel?.proprietario?.proprietarioNome }}</p>
         </div>
         <div class="mt-auto mb-auto me-5 d-flex justify-content-center align-items-start">
           <a [routerLink]="['/imoveis', imovel?.id]" class="btn btn-sm me-2 mb-2 detalhes">Detalhes</a>
