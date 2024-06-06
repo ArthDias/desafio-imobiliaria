@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ImovelService } from '../../services/imovel.service';
 import { ViaCepService } from '../../services/via-cep.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Imovel } from '../models/imovel';
 
 @Component({
@@ -10,6 +10,7 @@ import { Imovel } from '../models/imovel';
   templateUrl: './imoveis-form.component.html',
   styleUrl: './imoveis-form.component.css'
 })
+
 export class ImoveisFormComponent implements OnInit {
   public imovel: Imovel = {
     id: 0,
@@ -44,7 +45,52 @@ export class ImoveisFormComponent implements OnInit {
     imageUrl: ''
   };
   public form!: FormGroup;
-  public url: any
+  public url: any;
+  //Expressão regular para validar o CEP.
+  public validaCep = /^\d{2}\d{3}\d{3}$/;
+
+  private caracteresRepetidosValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value: string = control.value;
+      if (!value) {
+        return null;
+      }
+
+      for (let i = 0; i < value.length - 1; i++) {
+        if (value[i] === value[i + 1]) {
+          return { caracteresRepetidos: true };
+        }
+      }
+
+      return null;
+    };
+  }
+
+  private dateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value: string = control.value;
+      if (!value) {
+        return null;
+      }
+
+      const inputDate = new Date(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Para ignorar a hora no comparativo
+
+      if (inputDate > today) {
+        return { invalidDate: 'A data não pode estar no futuro.' };
+      }
+
+      const hundredYearsAgo = new Date();
+      hundredYearsAgo.setFullYear(hundredYearsAgo.getFullYear() - 100);
+
+      if (inputDate < hundredYearsAgo) {
+        return { invalidDate: 'A data não pode estar muito no passado.' };
+      }
+
+      return null;
+    };
+  }
 
   constructor(
     private router: Router,
@@ -54,30 +100,30 @@ export class ImoveisFormComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.form = this.fb?.group({
-      nome: ['', Validators.required],
-      tipo: ['', Validators.required],
-      valor: [0, Validators.required],
-      condominio: [0],
-      quartos: [0, Validators.required],
-      banheiros: [0, Validators.required],
+    this.form = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50), this.caracteresRepetidosValidator()]],
+      tipo: ['', [Validators.required, Validators.pattern(/^[^\d]+$/), Validators.maxLength(50), this.caracteresRepetidosValidator()]],
+      valor: [0, [Validators.required, Validators.min(0)]],
+      condominio: [0, [Validators.min(0)]],
+      quartos: [0, [Validators.required, Validators.min(0)]],
+      banheiros: [0, [Validators.required, Validators.min(0)]],
       mobiliado: [false],
-      area: [0, Validators.required],
+      area: [0, [Validators.required, Validators.min(0)]],
       venda: [false],
       aluguel: [false],
-      dataAnuncio: [new Date(), Validators.required],
+      dataAnuncio: ['', [Validators.required, this.dateValidator()]], // Validador de data adicionado corretamente
       imageUrl: [],
       endereco: this.fb.group({
-        cep: ['', Validators.required],
-        numero: ['', Validators.required],
+        cep: ['', [Validators.required, Validators.pattern(this.validaCep)]],
+        numero: ['', [Validators.required, Validators.min(1), Validators.pattern(/^\d+$/)]],
         complemento: [''],
-        rua: ['', Validators.required],
-        bairro: ['', Validators.required],
-        cidade: ['', Validators.required],
-        uf: ['', Validators.required]
+        rua: ['', [Validators.required, Validators.maxLength(100), this.caracteresRepetidosValidator()]],
+        bairro: ['', [Validators.required, Validators.maxLength(50), this.caracteresRepetidosValidator()]],
+        cidade: ['', [Validators.required, Validators.maxLength(50), this.caracteresRepetidosValidator()]],
+        uf: ['', [Validators.required, Validators.maxLength(2), Validators.pattern(/^[^\d]+$/)]]
       }),
       proprietario: this.fb.group({
-        proprietarioNome: ['', Validators.required]
+        proprietarioNome: ['', [Validators.required, Validators.maxLength(100), this.caracteresRepetidosValidator()]]
       }),
     });
   }
@@ -97,11 +143,9 @@ export class ImoveisFormComponent implements OnInit {
   onCepChange(cep: string): void {
     cep = cep.replace(/\D/g, '');
     if (cep != "") {
-      //Expressão regular para validar o CEP.
-      var validaCep = /^[0-9]{8}$/;
 
       // this.resetaEnderecoForm();
-      if (validaCep.test(cep)) {
+      if (this.validaCep.test(cep)) {
         this.viaCepService.getEnderecoPeloCep(cep).subscribe({
           next: (dadosCep) => {
             this.form.patchValue({
@@ -123,7 +167,7 @@ export class ImoveisFormComponent implements OnInit {
     if (file) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = (event:any) => {
+      reader.onload = (event: any) => {
         this.form.patchValue({
           imageUrl: event.target.result as string
         });

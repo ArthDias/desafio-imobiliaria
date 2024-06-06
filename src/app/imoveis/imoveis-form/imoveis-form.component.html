@@ -1,58 +1,99 @@
 <div class="container mt-5">
   <h2>Adicionar um novo imóvel</h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" #f="ngForm">
+
     <div class="row">
       <div class="mb-3">
         <label for="nome" class="form-label">Nome</label>
         <input type="text" class="form-control" id="nome" name="nome" formControlName="nome">
-        <div *ngIf="this.form.get('nome')?.invalid && (form.get('nome')?.dirty || form.get('nome')?.touched)"
-          class="text-danger">
-          Nome é um campo obrigatório.
+        <div *ngIf="form.get('nome')?.invalid && (form.get('nome')?.dirty || form.get('nome')?.touched)" class="text-danger">
+          <div *ngIf="form.get('nome')?.getError('required')">
+            Nome é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('nome')?.getError('minlength')">
+            O nome deve ter pelo menos 2 caracteres.
+          </div>
+          <div *ngIf="form.get('nome')?.getError('maxlength')">
+            O nome não pode ter mais de 50 caracteres.
+          </div>
+          <div *ngIf="form.get('nome')?.getError('caracteresRepetidos')">
+            O nome não pode conter caracteres repetidos consecutivos.
+          </div>
         </div>
       </div>
       <div class="mb-3">
         <label for="tipo" class="form-label">Tipo</label>
         <input type="text" class="form-control" id="tipo" name="tipo" formControlName="tipo">
-        <div *ngIf="this.form.get('tipo')?.invalid && (form.get('tipo')?.dirty || form.get('tipo')?.touched)"
-          class="text-danger">
-          Tipo é um campo obrigatório.
+        <div *ngIf="form.get('tipo')?.invalid && (form.get('tipo')?.dirty || form.get('tipo')?.touched)" class="text-danger">
+          <div *ngIf="form.get('tipo')?.getError('required')">
+            Tipo é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('tipo')?.getError('pattern')">
+            Tipo deve conter apenas letras.
+          </div>
+          <div *ngIf="form.get('tipo')?.getError('maxlength')">
+            Tipo não pode ter mais de 50 caracteres.
+          </div>
+          <div *ngIf="form.get('tipo')?.getError('caracteresRepetidos')">
+            O tipo não pode conter caracteres repetidos consecutivos.
+          </div>
         </div>
       </div>
       <div class="mb-3 col-md-6">
         <label for="valor" class="form-label">Valor</label>
         <input type="number" class="form-control" id="valor" name="valor" formControlName="valor">
-        <div *ngIf="this.form.get('valor')?.invalid && (form.get('valor')?.dirty || form.get('valor')?.touched)"
-          class="text-danger">
-          Valor é um campo obrigatório.
+        <div *ngIf="form.get('valor')?.invalid && (form.get('valor')?.dirty || form.get('valor')?.touched)" class="text-danger">
+          <div *ngIf="form.get('valor')?.getError('required')">
+            Valor é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('valor')?.getError('min')">
+            O valor não pode ser menor que zero.
+          </div>
         </div>
       </div>
       <div class="mb-3 col-md-6">
         <label for="condominio" class="form-label">Condomínio</label>
         <input type="number" class="form-control" id="condominio" name="condominio" formControlName="condominio">
+        <div *ngIf="form.get('condominio')?.invalid && (form.get('condominio')?.dirty || form.get('condominio')?.touched)" class="text-danger">
+          <div *ngIf="form.get('condominio')?.getError('min')">
+            O Condominio não pode ser menor que zero.
+          </div>
+        </div>
       </div>
       <div class="mb-3 col-md-4">
         <label for="quartos" class="form-label">Quartos</label>
         <input type="number" class="form-control" id="quartos" name="quartos" formControlName="quartos">
-        <div *ngIf="this.form.get('quartos')?.invalid && (form.get('quartos')?.dirty || form.get('quartos')?.touched)"
-          class="text-danger">
-          Quartos é um campo obrigatório.
+        <div *ngIf="form.get('quartos')?.invalid && (form.get('quartos')?.dirty || form.get('quartos')?.touched)" class="text-danger">
+          <div *ngIf="form.get('quartos')?.getError('required')">
+            Quartos é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('quartos')?.getError('min')">
+            O número de quartos não pode ser menor que zero.
+          </div>
         </div>
       </div>
       <div class="mb-3 col-md-4">
         <label for="banheiros" class="form-label">Banheiros</label>
         <input type="number" class="form-control" id="banheiros" name="banheiros" formControlName="banheiros">
-        <div
-          *ngIf="this.form.get('banheiros')?.invalid && (form.get('banheiros')?.dirty || form.get('banheiros')?.touched)"
-          class="text-danger">
-          Banheiros é um campo obrigatório.
+        <div *ngIf="form.get('banheiros')?.invalid && (form.get('banheiros')?.dirty || form.get('banheiros')?.touched)" class="text-danger">
+          <div *ngIf="form.get('banheiros')?.getError('required')">
+            Banheiros é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('banheiros')?.getError('min')">
+            O número de banheiros não pode ser menor que zero.
+          </div>
         </div>
       </div>
       <div class="mb-3  col-md-4">
         <label for="area" class="form-label">Área (m²)</label>
         <input type="number" class="form-control" id="area" name="area" formControlName="area">
-        <div *ngIf="this.form.get('area')?.invalid && (form.get('area')?.dirty || form.get('area')?.touched)"
-          class="text-danger">
-          Área é um campo obrigatório.
+        <div *ngIf="form.get('area')?.invalid && (form.get('area')?.dirty || form.get('area')?.touched)" class="text-danger">
+          <div *ngIf="form.get('area')?.getError('required')">
+            Área é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('area')?.getError('min')">
+            A área não pode ser menor que zero.
+          </div>
         </div>
       </div>
       <div class="mb-3 col-md-4">
@@ -61,21 +102,22 @@
       </div>
       <div class="mb-3 col-md-4">
         <label for="venda" class="form-label me-3">Venda</label>
-        <input type="checkbox" id="venda" [disabled]="this.form.get('aluguel')?.value == true" name="venda"
-          formControlName="venda">
+        <input type="checkbox" id="venda" [disabled]="form.get('aluguel')?.value == true" name="venda" formControlName="venda">
       </div>
       <div class="mb-3 col-md-4">
         <label for="aluguel" class="form-label me-3">Aluguel</label>
-        <input type="checkbox" [disabled]="this.form.get('venda')?.value == true" id="aluguel" name="aluguel"
-          formControlName="aluguel">
+        <input type="checkbox" [disabled]="form.get('venda')?.value == true" id="aluguel" name="aluguel" formControlName="aluguel">
       </div>
       <div class="mb-3">
         <label for="dataAnuncio" class="form-label">Data do Anúncio</label>
         <input type="date" class="form-control" id="dataAnuncio" name="dataAnuncio" formControlName="dataAnuncio">
-        <div
-          *ngIf="this.form.get('dataAnuncio')?.invalid && (form.get('dataAnuncio')?.dirty || form.get('dataAnuncio')?.touched)"
-          class="text-danger">
-          Data do Anúncio é um campo obrigatório.
+        <div *ngIf="form.get('dataAnuncio')?.invalid && (form.get('dataAnuncio')?.dirty || form.get('dataAnuncio')?.touched)" class="text-danger">
+          <div *ngIf="form.get('dataAnuncio')?.getError('required')">
+            Data do Anúncio é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('dataAnuncio')?.getError('invalidDate')">
+            {{ form.get('dataAnuncio')?.getError('invalidDate') }}
+          </div>
         </div>
       </div>
     </div>
@@ -83,19 +125,26 @@
     <div class="row" formGroupName="endereco">
       <div class="mb-3 col-md-3">
         <label for="cep" class="form-label">CEP</label>
-        <input type="text" class="form-control" id="cep" name="cep" formControlName="cep"
-          (ngModelChange)="onCepChange($event)">
-        <div *ngIf="this.form.get('cep')?.invalid && (form.get('cep')?.dirty || form.get('cep')?.touched)"
-          class="text-danger">
-          CEP é um campo obrigatório.
+        <input type="text" class="form-control" id="cep" name="cep" formControlName="cep" (ngModelChange)="onCepChange($event)">
+        <div *ngIf="form.get('endereco.cep')?.invalid && (form.get('endereco.cep')?.dirty || form.get('endereco.cep')?.touched)" class="text-danger">
+          <div *ngIf="form.get('endereco.cep')?.getError('required')">
+            CEP é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('endereco.cep')?.getError('pattern')">
+            Formato de CEP inválido.
+          </div>
         </div>
       </div>
       <div class="mb-3 col-md-3">
         <label for="numero" class="form-label">Número</label>
         <input type="text" class="form-control" id="numero" name="numero" formControlName="numero">
-        <div *ngIf="this.form.get('numero')?.invalid && (form.get('numero')?.dirty || form.get('numero')?.touched)"
-          class="text-danger">
-          Número é um campo obrigatório.
+        <div *ngIf="form.get('endereco.numero')?.invalid && (form.get('endereco.numero')?.dirty || form.get('endereco.numero')?.touched)" class="text-danger">
+          <div *ngIf="form.get('endereco.numero')?.getError('required')">
+            Número é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('endereco.numero')?.getError('pattern')">
+            Número deve conter apenas números.
+          </div>
         </div>
       </div>
       <div class="mb-3 col-md-6">
@@ -105,45 +154,69 @@
       <div class="mb-3 col-md-12">
         <label for="rua" class="form-label">Rua</label>
         <input type="text" class="form-control" id="rua" name="rua" formControlName="rua">
-        <div *ngIf="this.form.get('rua')?.invalid && (form.get('rua')?.dirty || form.get('rua')?.touched)"
-          class="text-danger">
-          Rua é um campo obrigatório.
+        <div *ngIf="form.get('endereco.rua')?.invalid && (form.get('endereco.rua')?.dirty || form.get('endereco.rua')?.touched)" class="text-danger">
+          <div *ngIf="form.get('endereco.rua')?.getError('required')">
+            Rua é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('endereco.rua')?.getError('caracteresRepetidos')">
+            A rua não pode conter caracteres repetidos consecutivos.
+          </div>
         </div>
       </div>
       <div class="mb-3 col-md-5">
         <label for="bairro" class="form-label">Bairro</label>
         <input type="text" class="form-control" id="bairro" name="bairro" formControlName="bairro">
-        <div *ngIf="this.form.get('bairro')?.invalid && (form.get('bairro')?.dirty || form.get('bairro')?.touched)"
-          class="text-danger">
-          Bairro é um campo obrigatório.
+        <div *ngIf="form.get('endereco.bairro')?.invalid && (form.get('endereco.bairro')?.dirty || form.get('endereco.bairro')?.touched)" class="text-danger">
+          <div *ngIf="form.get('endereco.bairro')?.getError('required')">
+            Bairro é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('endereco.bairro')?.getError('caracteresRepetidos')">
+            O bairro rua não pode conter caracteres repetidos consecutivos.
+          </div>
         </div>
       </div>
       <div class="mb-3 col-md-4">
         <label for="cidade" class="form-label">Cidade</label>
         <input type="text" class="form-control" id="cidade" name="cidade" formControlName="cidade">
-        <div *ngIf="this.form.get('cidade')?.invalid && (form.get('cidade')?.dirty || form.get('cidade')?.touched)"
-          class="text-danger">
-          Cidade é um campo obrigatório.
+        <div *ngIf="form.get('endereco.cidade')?.invalid && (form.get('endereco.cidade')?.dirty || form.get('endereco.cidade')?.touched)" class="text-danger">
+          <div *ngIf="form.get('endereco.cidade')?.getError('required')">
+            Cidade é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('endereco.cidade')?.getError('caracteresRepetidos')">
+            A cidade não pode conter caracteres repetidos consecutivos.
+          </div>
         </div>
       </div>
       <div class="mb-3 col-md-3">
         <label for="uf" class="form-label">Estado</label>
         <input type="text" class="form-control" id="uf" name="uf" formControlName="uf">
-        <div *ngIf="this.form.get('uf')?.invalid && (form.get('uf')?.dirty || form.get('uf')?.touched)"
-          class="text-danger">
-          Estado é um campo obrigatório.
+        <div *ngIf="form.get('endereco.uf')?.invalid && (form.get('endereco.uf')?.dirty || form.get('endereco.uf')?.touched)" class="text-danger">
+          <div *ngIf="form.get('endereco.uf')?.getError('required')">
+            Estado é um campo obrigatório.
+          </div>
+          <div *ngIf="form.get('endereco.uf')?.getError('pattern')">
+            Estado deve conter apenas letras.
+          </div>
+          <div *ngIf="form.get('endereco.uf')?.getError('minlength') || form.get('endereco.uf')?.getError('maxlength')">
+            Estado deve ter 2 caracteres.
+          </div>
         </div>
       </div>
     </div>
     <h3 class="mt-4">Proprietário</h3>
     <div class="mb-3" formGroupName="proprietario">
       <label for="proprietarioNome" class="form-label">Nome do Proprietário</label>
-      <input type="text" class="form-control" id="proprietarioNome" name="proprietarioNome"
-        formControlName="proprietarioNome">
-      <div
-        *ngIf="this.form.get('proprietarioNome')?.invalid && (form.get('proprietarioNome')?.dirty || form.get('proprietarioNome')?.touched)"
-        class="text-danger">
-        Nome do Proprietário é um campo obrigatório.
+      <input type="text" class="form-control" id="proprietarioNome" name="proprietarioNome" formControlName="proprietarioNome">
+      <div *ngIf="form.get('proprietario.proprietarioNome')?.invalid && (form.get('proprietario.proprietarioNome')?.dirty || form.get('proprietario.proprietarioNome')?.touched)" class="text-danger">
+        <div *ngIf="form.get('proprietario.proprietarioNome')?.getError('required')">
+          Nome do Proprietário é um campo obrigatório.
+        </div>
+        <div *ngIf="form.get('proprietario.proprietarioNome')?.getError('caracteresRepetidos')">
+          Nome do Proprietário não pode conter caracteres repetidos consecutivos.
+        </div>
+        <div *ngIf="form.get('proprietario.proprietarioNome')?.getError('minlength') || form.get('proprietario.proprietarioNome')?.getError('maxlength')">
+          Nome do Proprietário deve ter entre 2 e 50 caracteres.
+        </div>
       </div>
     </div>
 
