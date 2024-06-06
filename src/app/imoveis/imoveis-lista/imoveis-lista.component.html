@@ -1,9 +1,9 @@
 <div class="container">
   <ul class="list-group mt-5">
-    <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let imovel of imoveis">
+    <li class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-start" *ngFor="let imovel of imoveis">
       <div class="ms-2 me-auto row">
-        <div class="col-12 col-md-4">
-          <img *ngIf="imovel?.imageUrl" [src]="imovel.imageUrl" alt="{{ imovel.nome }}" width="1000" class="img-thumbnail card-img">
+        <div class="col-12 col-md-4 mb-3 mb-md-0">
+          <img *ngIf="imovel?.imageUrl" [src]="imovel.imageUrl" alt="{{ imovel.nome }}" class="img-thumbnail card-img w-100">
         </div>
         <div class="col-12 col-md-8">
           <h4 *ngIf="imovel?.aluguel"><strong>Aluguel</strong></h4>
@@ -16,7 +16,7 @@
             }}, {{ imovel?.endereco?.cidade }}, {{ imovel?.endereco?.uf }}</p>
           <p><strong>Proprietário: </strong>{{ imovel?.proprietario?.proprietarioNome }}</p>
         </div>
-        <div class="mt-auto mb-auto me-5 d-flex justify-content-center align-items-start">
+        <div class="mt-2 mt-md-auto mb-auto me-5 d-flex justify-content-center align-items-start flex-wrap">
           <a [routerLink]="['/imoveis', imovel?.id]" class="btn btn-sm me-2 mb-2 detalhes">Detalhes</a>
           <a [routerLink]="['/imoveis', imovel?.id, 'editar']" class="btn btn-sm me-2 mb-2 editar" *ngIf="isLoggedIn">Editar</a>
           <button (click)="deleteImovel(imovel.id)" class="btn btn-sm excluir" *ngIf="isLoggedIn">Excluir</button>
