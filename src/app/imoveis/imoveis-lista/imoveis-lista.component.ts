@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ImovelService } from '../../services/imovel.service';
 import { Imovel } from '../models/imovel';
+import { NotificadorService } from '../../services/notificador.service';
 
 @Component({
   selector: 'app-imoveis-lista',
@@ -11,7 +12,10 @@ export class ImoveisListaComponent implements OnInit {
   imoveis: Imovel[] = [];
   isLoggedIn: boolean = false;
 
-  constructor(private imovelService: ImovelService) { }
+  constructor(
+    private imovelService: ImovelService,
+    private notificador: NotificadorService
+    ) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!localStorage.getItem('token');
@@ -20,6 +24,7 @@ export class ImoveisListaComponent implements OnInit {
 
   deleteImovel(id: number): void {
     this.imovelService.deleteImovel(id).subscribe(() => {
+      this.notificador.mostraNotificacao('Imóvel Excluído!', 'Fechar');
       this.imoveis = this.imoveis.filter(imovel => imovel.id !== id);
     });
   }

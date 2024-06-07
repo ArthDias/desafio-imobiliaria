@@ -4,6 +4,7 @@ import { ImovelService } from '../../services/imovel.service';
 import { ViaCepService } from '../../services/via-cep.service';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Imovel } from '../models/imovel';
+import { NotificadorService } from '../../services/notificador.service';
 
 @Component({
   selector: 'app-imoveis-form',
@@ -96,7 +97,8 @@ export class ImoveisFormComponent implements OnInit {
     private router: Router,
     private imovelService: ImovelService,
     private viaCepService: ViaCepService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private notificador: NotificadorService
   ) { }
 
   ngOnInit(): void {
@@ -180,6 +182,7 @@ export class ImoveisFormComponent implements OnInit {
     let imovel = Object.assign({}, this.imovel, this.form.value);
 
     this.imovelService.addImovel(imovel).subscribe(() => {
+      this.notificador.mostraNotificacao('Imóvel criado com sucesso!', 'Fechar');
       this.router.navigate(['/imoveis']);
     });
   }

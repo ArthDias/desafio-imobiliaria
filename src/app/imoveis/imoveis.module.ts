@@ -9,7 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ImovelService } from '../services/imovel.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ImoveisEditarComponent } from './imoveis-editar/imoveis-editar.component';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const routes: Routes = [
   { path: '', component: ImoveisListaComponent },
@@ -31,7 +31,8 @@ const routes: Routes = [
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule
   ],
   providers: [ImovelService]
 })

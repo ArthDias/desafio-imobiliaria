@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
+import { NotificadorService } from '../../services/notificador.service';
 
 @Component({
   selector: 'app-login',
@@ -15,13 +16,23 @@ import { Router, RouterModule } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private notificador: NotificadorService
+    ) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+
+    const notificacao = localStorage.getItem('loginNotification');
+    if (notificacao) {
+        this.notificador.mostraNotificacao(notificacao, 'Fechar');
+        localStorage.removeItem('loginNotification');
+    }
   }
 
 onSubmit() {
@@ -33,7 +44,15 @@ onSubmit() {
         localStorage.setItem("token", response.token)
       },
       error: (error) => {
-        console.log(error.error);
+        if (error.status === 400) {
+          this.notificador.mostraNotificacao('Usuário ou Senha incorreto(os).', 'Fechar');
+        } else if (error.status === 401) {
+          this.notificador.mostraNotificacao('Usuário ou Senha incorreto(os).', 'Fechar');
+        } else if (error.status === 500) {
+          this.notificador.mostraNotificacao('Erro ao salvar o usuário.', 'Fechar');
+        } else {
+          this.notificador.mostraNotificacao('Erro desconhecido.', 'Fechar');
+        }
       },
       complete: () => {
         console.log('Login request completed');
