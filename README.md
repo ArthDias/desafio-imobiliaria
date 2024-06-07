@@ -81,4 +81,3 @@ Inicie o servidor de desenvolvimento (lembre-se de estar no diretório desafio-i
 ng serve
 ```
 Abra o navegador e vá para http://localhost:4200.
-Ou acesse [**aqui**](https://desafio-imobiliaria.vercel.app/imoveis)
