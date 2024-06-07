@@ -3,10 +3,11 @@ const bodyParser = require('body-parser');
 const jsonfile = require('jsonfile');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
-const PORT = 3000;
-const DB_FILE = './usuarios-db.json';
+const PORT = process.env.PORT || 3000;
+const DB_FILE = path.join(__dirname, 'usuarios-db.json');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,18 +33,18 @@ app.post('/register', (req, res) => {
 
 // Login de usuário
 app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-  jsonfile.readFile(DB_FILE, (err, data) => {
-      if (err) return res.status(500).send('Erro ao ler o banco de dados.');
+    const { username, password } = req.body;
+    jsonfile.readFile(DB_FILE, (err, data) => {
+        if (err) return res.status(500).send('Erro ao ler o banco de dados.');
 
-      const user = data.users.find(user => user.username === username);
-      if (!user) return res.status(400).send('Usuário não encontrado.');
+        const user = data.users.find(user => user.username === username);
+        if (!user) return res.status(400).send('Usuário não encontrado.');
 
-      const isPasswordValid = bcrypt.compareSync(password, user.password);
-      if (!isPasswordValid) return res.status(401).send('Senha incorreta.');
+        const isPasswordValid = bcrypt.compareSync(password, user.password);
+        if (!isPasswordValid) return res.status(401).send('Senha incorreta.');
 
-      res.status(200).json({message: 'Login bem-sucedido.', token: 'poiwqefhn', expiresIn: ''});
-  });
+        res.status(200).json({ message: 'Login bem-sucedido.', token: 'poiwqefhn', expiresIn: '' });
+    });
 });
 
 app.listen(PORT, () => {
