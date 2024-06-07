@@ -40,7 +40,7 @@ cd desafio-imobiliaria
 npm install
 ```
 ```bash
-npm install bootstrap@5.3.3
+ng add @angular/material
 ng add @ng-bootstrap/ng-bootstrap
 ```
 
