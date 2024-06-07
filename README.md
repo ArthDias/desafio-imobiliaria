@@ -41,6 +41,8 @@ npm install
 ```
 ```bash
 ng add @angular/material
+? Choose a prebuilt theme name, or "custom" for a custom theme: Purple/Green [ Preview: https://material.angular.io?theme=purple-green ]
+? Set up global Angular Material typography styles? Yes
 ng add @ng-bootstrap/ng-bootstrap
 ```
 
