@@ -9,7 +9,7 @@
     "test": "ng test",
     "start:api-usuario": "node api/api-usuario/server.js",
     "start:api-fake": "node api/api-fake/index.js",
-    "vercel-build": "ng build --prod"
+    "vercel-build": "ng build --configuration production"
   },
   "private": true,
   "dependencies": {
